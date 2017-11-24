@@ -1,0 +1,26 @@
+b=4;     
+rmin=3.2;  %rmin = minimum intrinsic rate of growth
+rmax=3.6; % rmax = maximum intrinsic rate of growth
+x0=b/2;   %initial population x0 of host   
+
+
+n=1000;  
+jmax=500;
+t=zeros(jmax+1,1);
+z=zeros(jmax+1,250);
+del=(rmax-rmin)/jmax;
+for j=1:jmax+1
+x=zeros(n+1,1);
+x(1)=x0;
+t(j)=(j-1)*del+rmin;
+r=t(j);
+for i=1:n
+x(i+1)=r*x(i)/(1+x(i)^b);   %defines the difference equation for which the bifurcation diagram is being created
+if (i>750) 
+   z(j,i-750)=x(i+1);
+   end
+end
+end
+plot(t,z,'b.','MarkerSize',4)
+xlabel('r','FontSize',10), ylabel('Abundance','FontSize',10)
+title('Bifurcation diagram for the Rickers model')
